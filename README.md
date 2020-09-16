@@ -11,7 +11,7 @@ Traffic in big cities can quickly become an issue and in today's times having pe
 ### Documents:
 - [SRS Document](https://docs.google.com/document/d/1eAyJ9G06l1lmgcqCTheV70fToOEOCEJhwa5ln3IvMO0/edit)
 - [Coding Standards](https://docs.google.com/document/d/1InJWy2IhB9PpMIdWKsOTQqAvSV-frXWTlyMCSbN2ptw/edit?usp=sharing)
-- [Installation Manual](https://docs.google.com/document/d/1x6ZiMAT8Qi2fKVTq8rmmD2MvIuykocylTufLMkb5HN8/edit)
+- [Installation Manual](https://docs.google.com/document/d/1x6ZiMAT8Qi2fKVTq8rmmD2MvIuykocylTufLMkb5HN8/edit?usp=sharing)
 - [User Manual](https://docs.google.com/document/d/1LhNsORokHXgobBF2hBluUihjAdw82lQBsTMyffnl3xo/edit?usp=sharing)
 - [Testing Policy](https://docs.google.com/document/d/1uQSWXwHwujGRCfhbE4_SyaJXH8ZU_CBVqf4pOfi2lyE/edit?usp=sharing)
 

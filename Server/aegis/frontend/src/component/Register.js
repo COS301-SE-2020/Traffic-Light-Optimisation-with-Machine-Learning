@@ -74,6 +74,7 @@ function Register(props) {
                       <ul>
                         <li>Must contain 6 or more characters</li>
                         <li>Must be less than 12 characters</li>
+                        <li>Must not contain spaces</li>
                       </ul>
                     </div>
                     <div className="arrow-down"></div>
@@ -90,6 +91,7 @@ function Register(props) {
                       <ul>
                         <li>Must contain 8 or more characters</li>
                         <li>Must be less than 20 characters</li>
+                        <li>Must not contain spaces</li>
                       </ul>
                     </div>
                     <div className="arrow-down"></div>

@@ -2,7 +2,7 @@
 ### Overview
 Traffic in big cities can quickly become an issue and in today's times having people reset traffic timers is just not cutting it anymore. The idea involves creating a traffic optimisation system using machine learning, image processing and tracking to improve the flow of traffic at various times of day, under various kinds of conditions.
 
-### Team Collaborative Tools
+### Project Website
 - [Project Website](http://142.93.139.199:8080/)
 
 ### Team Collaborative Tools

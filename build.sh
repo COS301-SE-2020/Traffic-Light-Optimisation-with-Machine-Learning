@@ -1,5 +1,5 @@
 cd Server/aegis/frontend/
-npm run build &
+npm run build
 npm start &
 cd ..
 mvn clean package

@@ -91,15 +91,38 @@ public class ReinforcementLearning {
      * @return a double holding the reward
      */
     private static double Reward(double[] s_before, int a, double[] s_after) {
-        double r                = 0;//the reward
         double incNumMoving     = 0;
         double incNumStationary = 0;
         for (int i = 0; i < NeuralNetworkUtitlities.numIntersections; i++) {
-            incNumStationary    += (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 0] - s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 0]) + (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 1] - s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 1]);
-            incNumMoving        += (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 2] - s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 2]) + (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 3] - s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 3]);
-        }
-        r = incNumMoving - (incNumStationary);
-        return r;
+            double incStationaryX   = s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 0] - s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 0];
+            double incStationaryY   = s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 1] - s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 1];
+            double incMovingX       = s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 2] - s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 2];
+            double incMovingY       = s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 3] - s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 3];
+            double period           = s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 5];
+            incNumStationary        += 
+                    ((period+1)*(incStationaryX+incStationaryY));
+            incNumMoving            += 
+                    ((16-period+1)*(incMovingX+incMovingY));
+            /*incNumStationary        += 
+                    (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 0] 
+                        - 
+                        s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 0]) 
+                    + 
+                    (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 1] 
+                        - 
+                        s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 1]);
+            incNumMoving        += 
+                    (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 2] 
+                        - 
+                        s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 2]) 
+                    + 
+                    (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 3] 
+                        - 
+                        s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 3]);
+            */
+        } 
+        
+        return incNumMoving - incNumStationary;
     }
 
     /**

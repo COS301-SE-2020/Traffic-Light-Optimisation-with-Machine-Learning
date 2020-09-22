@@ -56,13 +56,16 @@ public class FourWayIntersection : IntersectionParent
     bool isMakeChange = false;
     private float defaultCycle = 16.0f;
 
+    /**
+        Start() - Reset called upon start of script
+    */
     void Start()
     {
         reset();
     }
 
     /**
-        reset() - Resets timers, sets light config flag, resets moving vehicles stats
+        reset() - Resets timers, sets light config flag, resets stationary vehicles stats
     */
     void reset()
     {
@@ -70,12 +73,15 @@ public class FourWayIntersection : IntersectionParent
         timeLeftBothRed = timeOutBothRed;
         light_configruation = !light_configruation;
         changeLights();
-        inX1.GetComponent<IncomingCounter>().reset(); // resets movingvehicles
+        inX1.GetComponent<IncomingCounter>().reset();
         inX2.GetComponent<IncomingCounter>().reset();
         inZ1.GetComponent<IncomingCounter>().reset();
         inZ2.GetComponent<IncomingCounter>().reset();
     }
 
+    /**
+        getIntersection() - Returns traffic light object with updates data
+    */
     public override TrafficIntersection getIntersection()
     {
         TrafficIntersection intersection = new TrafficIntersection();
@@ -107,47 +113,44 @@ public class FourWayIntersection : IntersectionParent
 
         return intersection;
     }
+
+    /**
+        changeLights() - Changes light tags and updates light configuration flags
+    */
     public void changeLights()
     {
         if (light_configruation)
         {
-            tlX1.tag = "Green"; //Green
-            //prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Green");
+            tlX1.tag = "Green"; 
             prefabTLX1Colour = "Green";
-            tlX2.tag = "Green"; //Green
-            //prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Green");
+            tlX2.tag = "Green"; 
             prefabTLX2Colour = "Green";
             tlZ1.tag = "Car";
-            //prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Red");
             prefabTLZ1Colour = "Red";
             tlZ2.tag = "Car";
-            //prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Red");
             prefabTLZ2Colour = "Red";
             isZ = false;
             isX = true;
-            isXZ = true;
         }
         else
         {
             tlX1.tag = "Car";
-            //prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Red");
             prefabTLX1Colour = "Red";
             tlX2.tag = "Car";
-            //prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Red");
             prefabTLX2Colour = "Red";
-            tlZ1.tag = "Green"; //Green
-            //prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Green");
+            tlZ1.tag = "Green"; 
             prefabTLZ1Colour = "Green";
-            tlZ2.tag = "Green"; //Green
-            //prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Green");
+            tlZ2.tag = "Green"; 
             prefabTLZ2Colour = "Green";
             isZ = true;
             isX = false;
-            isXZ = true;
         }
+        isXZ = true;
     }
 
-    // Update is called once per frame
+    /**
+        Update() - Sets light colour and starts coroutines
+    */
     void Update()
     {
         prefabTLX1.GetComponent<TrafficLightManager>().changeLight(prefabTLX1Colour);
@@ -209,6 +212,7 @@ public class FourWayIntersection : IntersectionParent
         tlZ1.tag = "Car";
         tlZ2.tag = "Car";
     }
+
     /**
         APILightChange() - Traffic light change logic
     */
@@ -249,6 +253,9 @@ public class FourWayIntersection : IntersectionParent
         yield return null;
     }
     
+    /**
+        resetGeneration() - Resets moving Cars
+    */
     public override void resetGeneration()
     {
         inX1.GetComponent<IncomingCounter>().resetGeneration();

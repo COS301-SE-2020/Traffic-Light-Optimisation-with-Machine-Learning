@@ -54,6 +54,7 @@ public class HighwayIntersection : IntersectionParent
     bool insideLightChange = false;
     [SyncVar]
     bool isMakeChange = false;
+    private float defaultCycle = 16.0f;
 
     void Start()
     {
@@ -109,6 +110,10 @@ public class HighwayIntersection : IntersectionParent
         {
             intersection.phase = 2;
         }
+
+        intersection.period = (float)Math.Floor(defaultCycle - timeLeft);
+        if (timeLeft < 0.0f)
+            intersection.period = defaultCycle;
 
         return intersection;
     }

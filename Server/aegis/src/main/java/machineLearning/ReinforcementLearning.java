@@ -102,24 +102,7 @@ public class ReinforcementLearning {
             incNumStationary        += 
                     ((period+1)*(incStationaryX+incStationaryY));
             incNumMoving            += 
-                    ((16-period+1)*(incMovingX+incMovingY));
-            /*incNumStationary        += 
-                    (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 0] 
-                        - 
-                        s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 0]) 
-                    + 
-                    (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 1] 
-                        - 
-                        s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 1]);
-            incNumMoving        += 
-                    (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 2] 
-                        - 
-                        s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 2]) 
-                    + 
-                    (s_after[(i * NeuralNetworkUtitlities.numNumbersData) + 3] 
-                        - 
-                        s_before[(i * NeuralNetworkUtitlities.numNumbersData) + 3]);
-            */
+                    ((16-period+1)*(incMovingX+incMovingY)); 
         } 
         
         return incNumMoving - incNumStationary;

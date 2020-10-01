@@ -1,8 +1,15 @@
-﻿using System.Collections;
+﻿/**
+	@file spawning.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class holds the logic for spawning cars
+*/
 [System.Serializable]
 public class spawning : NetworkBehaviour{
 
@@ -14,6 +21,7 @@ public class spawning : NetworkBehaviour{
 
     private GameObject car;
 
+	/// Called upon initilization and spawns a car on the network
     IEnumerator Start()
     {	
     	while(true){
@@ -23,7 +31,7 @@ public class spawning : NetworkBehaviour{
         }
     }
 
-    // Update is called once per frame
+    /// Called every frame although currently serves no purpose
     void Update()
     {
         

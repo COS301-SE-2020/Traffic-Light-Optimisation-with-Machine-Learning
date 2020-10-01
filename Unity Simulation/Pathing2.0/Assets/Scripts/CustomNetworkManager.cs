@@ -1,7 +1,14 @@
-﻿using System.Collections;
+﻿/**
+	@file CustomNetworkManager.cs
+*/
+
+using System.Collections;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class contains the custom network manager we implemented, it inherits from the base network manager and add extra functionality
+*/
 public class CustomNetworkManager : NetworkManager
 {
     /*public override void Start()
@@ -9,6 +16,7 @@ public class CustomNetworkManager : NetworkManager
         StartServer();
     }*/
 
+	///Called when a new connection is made to the simulation
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         base.OnServerAddPlayer(conn);
@@ -17,6 +25,7 @@ public class CustomNetworkManager : NetworkManager
         //NetworkServer.Spawn(car);
     }
 
+	///Called when a conenction is terminated from simulation
     public override void OnServerDisconnect(NetworkConnection conn)
     {
         /*if (car != null)

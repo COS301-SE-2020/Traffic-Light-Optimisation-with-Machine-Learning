@@ -1,28 +1,40 @@
-﻿using System.Collections;
+﻿/**
+	@file OutgoingCounter.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+	This class holds the logic for the outgoing counter
+*/
 public class OutgoingCounter : MonoBehaviour
 {
     //bool started;
     private int numMovingCars;
-    // Start is called before the first frame update
+	
+    /// Called upon initialization
     void Start()
     {
         //started = true;
         numMovingCars = 0;
     }
 
-    // Update is called once per frame
+    /// Called every frame although currently serves no purpose
     void Update()
     {
         
     }
 
+	/// Resets moving cars to 0
     public void reset(){
         numMovingCars = 0;
     }
 
+	/**
+		@return Returns number of moving cars
+	*/
     public int getNumberCars(){
         return numMovingCars;
     }
@@ -31,6 +43,7 @@ public class OutgoingCounter : MonoBehaviour
         ++numMovingCars;
     }*/
 
+	/// Called when car enters collider and increments moving cars
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("CountingTag"))
         {

@@ -2,7 +2,7 @@
 package machineLearning; 
 public class ReplayBuffer {
     private long oldest = 0;
-    private final static int maxSize = 128;
+    private final static int maxSize = 500;
     public int occupancy;
     private final Transition head;
     private final Transition[] buffer;

@@ -14,7 +14,7 @@ public class ReinforcementLearning {
     private double[] lastState = null;                                              //holds the last 
     private double[] currState = null;                                              //
     private int currIteration;
-    private final static int minibatchSize = 64;                                    //minibatch size m
+    private final static int minibatchSize = 250;                                   //minibatch size m
     private final static double discount = 0.8;
     private final static int totalIterations = 100;                                 //how many iterations before updating target 
     private final static Random random = new Random(42069);                         //

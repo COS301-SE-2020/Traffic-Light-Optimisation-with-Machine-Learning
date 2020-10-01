@@ -69,6 +69,8 @@ public class SimulationController {
                 state[(i*NeuralNetworkUtitlities.numNumbersData)+2] = stats[i].getMovingX();
                 state[(i*NeuralNetworkUtitlities.numNumbersData)+3] = stats[i].getMovingY();
                 state[(i*NeuralNetworkUtitlities.numNumbersData)+4] = stats[i].getPhase();
+                state[(i*NeuralNetworkUtitlities.numNumbersData)+5] = stats[i].getPeriod();
+                
             } 
             int action = rl.getAction(state,complete.getNumStationaryCars());
             if(action == -1){

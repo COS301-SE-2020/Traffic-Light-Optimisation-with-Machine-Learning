@@ -54,54 +54,51 @@ public class HighwayIntersection : IntersectionParent
     bool insideLightChange = false;
     [SyncVar]
     bool isMakeChange = false;
+    private float defaultCycle = 16.0f;
 
+    /**
+        Start() - Reset called upon start of script
+    */
     void Start()
     {
         reset();
     }
 
+    /**
+        reset() - Resets timers, sets light config flag, resets stationary vehicles stats
+    */
     void reset()
-    { 
+    {
         timeLeft = timeOut;
         timeLeftBothRed = timeOutBothRed;
         light_configruation = !light_configruation;
         changeLights();
-        /*outX1.GetComponent<OutgoingCounter>().reset();
-        outX2.GetComponent<OutgoingCounter>().reset();
-        outZ1.GetComponent<OutgoingCounter>().reset();
-        outZ2.GetComponent<OutgoingCounter>().reset();*/
         inX1.GetComponent<IncomingCounter>().reset();
         inX2.GetComponent<IncomingCounter>().reset();
         inZ1.GetComponent<IncomingCounter>().reset();
         inZ2.GetComponent<IncomingCounter>().reset();
     }
 
+    /**
+        getIntersection() - Returns traffic light object with updates data
+    */
     public override TrafficIntersection getIntersection() 
     {
         TrafficIntersection intersection = new TrafficIntersection();
         if(isZ){
-            //intersection.stationaryX += inX1.GetComponent<IncomingCounter>().getNumberCars();
-            //intersection.stationaryX += inX2.GetComponent<IncomingCounter>().getNumberCars();
             intersection.stationaryX = (inX1.GetComponent<IncomingCounter>().getNumberCars() + inX2.GetComponent<IncomingCounter>().getNumberCars());
-        }
-        else if(isX){
-            //intersection.stationaryY += inZ1.GetComponent<IncomingCounter>().getNumberCars();
-            //intersection.stationaryY += inZ2.GetComponent<IncomingCounter>().getNumberCars();
+        }else if(isX){
             intersection.stationaryY = (inZ1.GetComponent<IncomingCounter>().getNumberCars() + inZ2.GetComponent<IncomingCounter>().getNumberCars());
         }
-        //intersection.movingX += outX1.GetComponent<OutgoingCounter>().getNumberCars();
-        //intersection.movingX += outX2.GetComponent<OutgoingCounter>().getNumberCars();
-        //intersection.movingY += outZ1.GetComponent<OutgoingCounter>().getNumberCars();
-        //intersection.movingY += outZ2.GetComponent<OutgoingCounter>().getNumberCars();
+    
         intersection.movingX = (inX1.GetComponent<IncomingCounter>().getMovingCars() + inX2.GetComponent<IncomingCounter>().getMovingCars());
         intersection.movingY = (inZ1.GetComponent<IncomingCounter>().getMovingCars() + inZ2.GetComponent<IncomingCounter>().getMovingCars());
-
 
         if (isX)
         {
             intersection.phase = 0;
         }
-        else if (isZ)
+        else if(isZ)
         {
             intersection.phase = 1;
         }
@@ -110,14 +107,21 @@ public class HighwayIntersection : IntersectionParent
             intersection.phase = 2;
         }
 
+        intersection.period = (float)Math.Floor(defaultCycle - timeLeft);
+        if (timeLeft < 0.0f)
+            intersection.period = defaultCycle;
+
         return intersection;
     }
 
+    /**
+        changeLights() - Changes light tags and updates light configuration flags
+    */
      public void changeLights()
     {
         if(light_configruation)
         {
-            tlX1.tag = "Green"; //Green
+            tlX1.tag = "Green"; 
             prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Green");
             tlX2.tag = "Green";
             prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Green");
@@ -127,7 +131,6 @@ public class HighwayIntersection : IntersectionParent
             prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Red");
             isZ = false;
             isX = true;
-            isXZ = true;
         }
         else
         {
@@ -135,16 +138,19 @@ public class HighwayIntersection : IntersectionParent
             prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Red");
             tlX2.tag = "Car";
             prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Red");
-            tlZ1.tag = "Green"; //Green
+            tlZ1.tag = "Green"; 
             prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Green");
-            tlZ2.tag = "Green"; //Green
+            tlZ2.tag = "Green"; 
             prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Green");
             isZ = true;
             isX = false;
-            isXZ = true;
         }
+        isXZ = true;
     }
 
+    /**
+        Update() - Starts coroutines
+    */
      void Update()
     {
         StartCoroutine(Waiter());
@@ -154,101 +160,85 @@ public class HighwayIntersection : IntersectionParent
         }
     }
 
-
+    /**
+        Waiter() - Default traffic light changing logic (failsafe)
+    */
     IEnumerator Waiter()
     {
-        //reset();
         timeLeft -= Time.deltaTime;
-        if(timeLeft <= 0f && isZ == true && insideLightChange == false)
-        {
-            //isX = false; isZ = false;
-            isXZ = false;
-            tlX1.tag = "Car";
-            prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Red");
-            tlX2.tag = "Car";
-            prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Red");
-            tlZ1.tag = "Car"; //Orange
-            prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Orange");
-            tlZ2.tag = "Car"; //Orange
-            prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Orange");
-            timeLeftBothRed -= Time.deltaTime;
-            if(timeLeftBothRed <= 0f) 
-            {
-                reset();
-            }
-        }
-        else if(timeLeft <= 0f && isZ == false && insideLightChange == false)
-        {
-            //isX = false; isZ = false;
-            isXZ = false;
-            tlX1.tag = "Car"; //Orange
-            prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Orange");
-            tlX2.tag = "Car"; //Orange
-            prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Orange");
-            tlZ1.tag = "Car";
-            prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Red");
-            tlZ2.tag = "Car";
-            prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Red");
-            timeLeftBothRed -= Time.deltaTime;
-            if(timeLeftBothRed <= 0f) 
-            {
+        if(timeLeft <= 0f && !insideLightChange){
+            if(timeLeftBothRed > 0.0f){
+                if (isZ)
+                {
+                    prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Red");
+                    prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Red");
+                    prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Orange");
+                    prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Orange");
+                } else {
+                    prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Orange");
+                    prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Orange");
+                    prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Red");
+                    prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Red");
+                }
+                isXZ = false;
+                timeLeftBothRed -= Time.deltaTime;
+                updateTrafficLightTagsToCar();
+            } else {
                 reset();
             }
         }
         yield return null;
     }
 
-    public override void updateTimeOut(float newTimeOut)
-    {
-        timeOut = newTimeOut;
-    }
-
+    /**
+        makeChange() - Sets changing flag
+    */
     public override void makeChange()
     {
         isMakeChange = true;
     }
 
+    /**
+        updateTrafficLightTagsToCar() - Updates traffic light tags
+    */
+    private void updateTrafficLightTagsToCar(){
+        tlX1.tag = "Car";
+        tlX2.tag = "Car";
+        tlZ1.tag = "Car";
+        tlZ2.tag = "Car";
+    }
+
+    /**
+        APILightChange() - Traffic light change logic
+    */
     IEnumerator APILightChange()
     {
-        if (!isXZ)
+        if (!isXZ) // X-direction is red and Z-direction is orange
         {
             //nothing happens
             isMakeChange = false;
         }
-        else if (isZ)
+        else 
         {
             insideLightChange = true;
-            tlX1.tag = "Car";
-            prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Red");
-            tlX2.tag = "Car";
-            prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Red");
-            tlZ1.tag = "Car"; //Orange
-            prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Orange");
-            tlZ2.tag = "Car"; //Orange
-            prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Orange");
 
             timeLeftBothRed -= Time.deltaTime;
-            if (timeLeftBothRed <= 0f)
-            {
-                isMakeChange = false;
-                reset();
-            }
-        }
-        else if (!isZ)
-        {
-            insideLightChange = true;
-            tlX1.tag = "Car"; //Orange
-            prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Orange");
-            tlX2.tag = "Car"; //Orange
-            prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Orange");
-            tlZ1.tag = "Car";
-            prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Red");
-            tlZ2.tag = "Car";
-            prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Red");
 
-            timeLeftBothRed -= Time.deltaTime;
-            if (timeLeftBothRed <= 0f)
+            if (timeLeftBothRed > 0.0f)
             {
+                updateTrafficLightTagsToCar();
+                if (isZ){
+                    prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Red");
+                    prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Red");
+                    prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Orange");
+                    prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Orange");              
+                } else{
+                    prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Orange");
+                    prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Orange");
+                    prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Red");
+                    prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Red");
+                }
+            } else {
                 isMakeChange = false;
                 reset();
             }
@@ -256,6 +246,9 @@ public class HighwayIntersection : IntersectionParent
         yield return null;
     }
     
+    /**
+        resetGeneration() - Resets moving Cars
+    */
     public override void resetGeneration()
     {
         inX1.GetComponent<IncomingCounter>().resetGeneration();

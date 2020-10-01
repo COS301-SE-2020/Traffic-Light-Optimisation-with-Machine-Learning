@@ -9,12 +9,8 @@ public class FourWayIntersection : IntersectionParent
     /*Car Counters*/
     public GameObject inX1;
     public GameObject inX2;
-    //public GameObject outX1;
-    //public GameObject outX2;
     public GameObject inZ1;
     public GameObject inZ2;
-    //public GameObject outZ1;
-    //public GameObject outZ2;
 
     /*Traffic Lights*/
     public GameObject tlX1;
@@ -53,33 +49,39 @@ public class FourWayIntersection : IntersectionParent
     [SyncVar]
     bool isX = false;
     [SyncVar]
-    bool isXZ = false;
+    bool isXZ = false; // check if one red and other orange
     [SyncVar]
     bool insideLightChange = false;
     [SyncVar]
     bool isMakeChange = false;
+    private float defaultCycle = 16.0f;
 
+    /**
+        Start() - Reset called upon start of script
+    */
     void Start()
     {
         reset();
     }
 
+    /**
+        reset() - Resets timers, sets light config flag, resets stationary vehicles stats
+    */
     void reset()
     {
         timeLeft = timeOut;
         timeLeftBothRed = timeOutBothRed;
         light_configruation = !light_configruation;
         changeLights();
-        /*outX1.GetComponent<OutgoingCounter>().reset();
-        outX2.GetComponent<OutgoingCounter>().reset();
-        outZ1.GetComponent<OutgoingCounter>().reset();
-        outZ2.GetComponent<OutgoingCounter>().reset();*/
         inX1.GetComponent<IncomingCounter>().reset();
         inX2.GetComponent<IncomingCounter>().reset();
         inZ1.GetComponent<IncomingCounter>().reset();
         inZ2.GetComponent<IncomingCounter>().reset();
     }
 
+    /**
+        getIntersection() - Returns traffic light object with updates data
+    */
     public override TrafficIntersection getIntersection()
     {
         TrafficIntersection intersection = new TrafficIntersection();
@@ -88,8 +90,7 @@ public class FourWayIntersection : IntersectionParent
         }else if(isX){
             intersection.stationaryY = (inZ1.GetComponent<IncomingCounter>().getNumberCars() + inZ2.GetComponent<IncomingCounter>().getNumberCars());
         }
-        //intersection.movingX = (outX1.GetComponent<OutgoingCounter>().getNumberCars() + outX2.GetComponent<OutgoingCounter>().getNumberCars());
-        //intersection.movingY = (outZ1.GetComponent<OutgoingCounter>().getNumberCars() + outZ2.GetComponent<OutgoingCounter>().getNumberCars());
+    
         intersection.movingX = (inX1.GetComponent<IncomingCounter>().getMovingCars() + inX2.GetComponent<IncomingCounter>().getMovingCars());
         intersection.movingY = (inZ1.GetComponent<IncomingCounter>().getMovingCars() + inZ2.GetComponent<IncomingCounter>().getMovingCars());
 
@@ -106,50 +107,50 @@ public class FourWayIntersection : IntersectionParent
             intersection.phase = 2;
         }
 
+        intersection.period = (float)Math.Floor(defaultCycle - timeLeft);
+        if (timeLeft < 0.0f)
+            intersection.period = defaultCycle;
+
         return intersection;
     }
 
+    /**
+        changeLights() - Changes light tags and updates light configuration flags
+    */
     public void changeLights()
     {
         if (light_configruation)
         {
-            tlX1.tag = "Green"; //Green
-            //prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Green");
+            tlX1.tag = "Green"; 
             prefabTLX1Colour = "Green";
-            tlX2.tag = "Green"; //Green
-            //prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Green");
+            tlX2.tag = "Green"; 
             prefabTLX2Colour = "Green";
             tlZ1.tag = "Car";
-            //prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Red");
             prefabTLZ1Colour = "Red";
             tlZ2.tag = "Car";
-            //prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Red");
             prefabTLZ2Colour = "Red";
             isZ = false;
             isX = true;
-            isXZ = true;
         }
         else
         {
             tlX1.tag = "Car";
-            //prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Red");
             prefabTLX1Colour = "Red";
             tlX2.tag = "Car";
-            //prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Red");
             prefabTLX2Colour = "Red";
-            tlZ1.tag = "Green"; //Green
-            //prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Green");
+            tlZ1.tag = "Green"; 
             prefabTLZ1Colour = "Green";
-            tlZ2.tag = "Green"; //Green
-            //prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Green");
+            tlZ2.tag = "Green"; 
             prefabTLZ2Colour = "Green";
             isZ = true;
             isX = false;
-            isXZ = true;
         }
+        isXZ = true;
     }
 
-    // Update is called once per frame
+    /**
+        Update() - Sets light colour and starts coroutines
+    */
     void Update()
     {
         prefabTLX1.GetComponent<TrafficLightManager>().changeLight(prefabTLX1Colour);
@@ -164,116 +165,87 @@ public class FourWayIntersection : IntersectionParent
         }
     }
 
+    /**
+        Waiter() - Default traffic light changing logic (failsafe)
+    */
     IEnumerator Waiter()
     {
-        //reset();
         timeLeft -= Time.deltaTime;
-        if (timeLeft <= 0f && isZ == true && insideLightChange == false)
-        {
-            //isX = false; isZ = false;
-            isXZ = false;
-            tlX1.tag = "Car";
-            //prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Red");
-            prefabTLX1Colour = "Red";
-            tlX2.tag = "Car";
-            //prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Red");
-            prefabTLX2Colour = "Red";
-            tlZ1.tag = "Car";    //Orange
-            //prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Orange");
-            prefabTLZ1Colour = "Orange";
-            tlZ2.tag = "Car";    //Orange
-            //prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Orange");
-            prefabTLZ2Colour = "Orange";
-            timeLeftBothRed -= Time.deltaTime;
-            if (timeLeftBothRed <= 0f)
-            {
-                reset();
-            }
-        }
-        else if (timeLeft <= 0f && isZ == false && insideLightChange == false)
-        {
-            //isX = false; isZ = false;
-            isXZ = false;
-            tlX1.tag = "Car";    //Orange
-            //prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Orange");
-            prefabTLX1Colour = "Orange";
-            tlX2.tag = "Car";    //Orange
-            //prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Orange");
-            prefabTLX2Colour = "Orange";
-            tlZ1.tag = "Car";
-            //prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Red");
-            prefabTLZ1Colour = "Red";
-            tlZ2.tag = "Car";
-            //prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Red");
-            prefabTLZ2Colour = "Red";
-            timeLeftBothRed -= Time.deltaTime;
-            if (timeLeftBothRed <= 0f)
-            {
+        if(timeLeft <= 0f && !insideLightChange){
+            if(timeLeftBothRed > 0.0f){
+                if (isZ)
+                {
+                    prefabTLX1Colour = "Red";
+                    prefabTLX2Colour = "Red";   
+                    prefabTLZ1Colour = "Orange";   
+                    prefabTLZ2Colour = "Orange";
+                } else {
+                    prefabTLX1Colour = "Orange";  
+                    prefabTLX2Colour = "Orange";
+                    prefabTLZ1Colour = "Red";
+                    prefabTLZ2Colour = "Red";
+                }
+                isXZ = false;
+                timeLeftBothRed -= Time.deltaTime;
+                updateTrafficLightTagsToCar();
+            } else {
                 reset();
             }
         }
         yield return null;
     }
 
-    public override void updateTimeOut(float newTimeOut)
-    {
-        timeOut = newTimeOut;
-    }
-
+    /**
+        makeChange() - Sets changing flag
+    */
     public override void makeChange()
     {
         isMakeChange = true;
     }
 
+    /**
+        updateTrafficLightTagsToCar() - Updates traffic light tags
+    */
+    private void updateTrafficLightTagsToCar(){
+        tlX1.tag = "Car";
+        tlX2.tag = "Car";
+        tlZ1.tag = "Car";
+        tlZ2.tag = "Car";
+    }
+
+    /**
+        APILightChange() - Traffic light change logic
+    */
     IEnumerator APILightChange()
     {
-        if (!isXZ)
+        if (!isXZ) // X-direction is red and Z-direction is orange
         {
             //nothing happens
             isMakeChange = false;
         }
-        else if (isZ)
+        else 
         {
             insideLightChange = true;
-            tlX1.tag = "Car";
-            //prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Red");
-            prefabTLX1Colour = "Red";
-            tlX2.tag = "Car";
-            //prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Red");
-            prefabTLX2Colour = "Red";
-            tlZ1.tag = "Car";   //Orange
-            //prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Orange");
-            prefabTLZ1Colour = "Orange";
-            tlZ2.tag = "Car";   //Orange
-            //prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Orange");
-            prefabTLZ2Colour = "Orange";
 
             timeLeftBothRed -= Time.deltaTime;
-            if (timeLeftBothRed <= 0f)
-            {
-                isMakeChange = false;
-                reset();
-            }
-        }
-        else if (!isZ)
-        {
-            insideLightChange = true;
-            tlX1.tag = "Car";    //Orange
-            //prefabTLX1.GetComponent<TrafficLightManager>().changeLight("Orange");
-            prefabTLX1Colour = "Orange";
-            tlX2.tag = "Car";    //Orange
-            //prefabTLX2.GetComponent<TrafficLightManager>().changeLight("Orange");
-            prefabTLX2Colour = "Orange";
-            tlZ1.tag = "Car";
-            //prefabTLZ1.GetComponent<TrafficLightManager>().changeLight("Red");
-            prefabTLZ1Colour = "Red";
-            tlZ2.tag = "Car";
-            //prefabTLZ2.GetComponent<TrafficLightManager>().changeLight("Red");
-            prefabTLZ2Colour = "Red";
 
-            timeLeftBothRed -= Time.deltaTime;
-            if (timeLeftBothRed <= 0f)
+            if (timeLeftBothRed > 0.0f)
             {
+                updateTrafficLightTagsToCar();
+                if (isZ){
+                    prefabTLX1Colour = "Red";
+                    prefabTLX2Colour = "Red";
+
+                    prefabTLZ1Colour = "Orange"; 
+                    prefabTLZ2Colour = "Orange";               
+                } else{
+                    prefabTLX1Colour = "Orange";    
+                    prefabTLX2Colour = "Orange";
+
+                    prefabTLZ1Colour = "Red";
+                    prefabTLZ2Colour = "Red";
+                }
+            } else {
                 isMakeChange = false;
                 reset();
             }
@@ -281,6 +253,9 @@ public class FourWayIntersection : IntersectionParent
         yield return null;
     }
     
+    /**
+        resetGeneration() - Resets moving Cars
+    */
     public override void resetGeneration()
     {
         inX1.GetComponent<IncomingCounter>().resetGeneration();

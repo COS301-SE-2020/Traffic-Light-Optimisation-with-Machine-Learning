@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿/**
+	@file FourWayIntersection.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class contains the logic for the four way intersection
+*/
 public class FourWayIntersection : IntersectionParent
 {
     /*Car Counters*/
@@ -59,11 +66,13 @@ public class FourWayIntersection : IntersectionParent
     [SyncVar]
     bool isMakeChange = false;
 
+	/// Called upon initialization of the intersection
     void Start()
     {
         reset();
     }
 
+	/// Resets the time back to16 seconds and resets the traffic lights including the counter for the number of moving cars
     void reset()
     {
         timeLeft = timeOut;
@@ -80,6 +89,9 @@ public class FourWayIntersection : IntersectionParent
         inZ2.GetComponent<IncomingCounter>().reset();
     }
 
+	/**
+		@return Returns an intersection object
+	*/
     public override TrafficIntersection getIntersection()
     {
         TrafficIntersection intersection = new TrafficIntersection();
@@ -109,6 +121,7 @@ public class FourWayIntersection : IntersectionParent
         return intersection;
     }
 
+	/// Changes lights to the correct colours
     public void changeLights()
     {
         if (light_configruation)
@@ -149,7 +162,7 @@ public class FourWayIntersection : IntersectionParent
         }
     }
 
-    // Update is called once per frame
+    /// Called once per frame and makes sure all the lights are showing the correct colours
     void Update()
     {
         prefabTLX1.GetComponent<TrafficLightManager>().changeLight(prefabTLX1Colour);
@@ -164,6 +177,7 @@ public class FourWayIntersection : IntersectionParent
         }
     }
 
+	/// Changes traffic lights to the correct intermediate colours (Red and orange)
     IEnumerator Waiter()
     {
         //reset();
@@ -215,16 +229,19 @@ public class FourWayIntersection : IntersectionParent
         yield return null;
     }
 
+	/// Resets time to the 16 seconds
     public override void updateTimeOut(float newTimeOut)
     {
         timeOut = newTimeOut;
     }
 
+	/// Called when new data from the server is received
     public override void makeChange()
     {
         isMakeChange = true;
     }
 
+	/// Called when the server sends data to update this intersection
     IEnumerator APILightChange()
     {
         if (!isXZ)
@@ -281,6 +298,7 @@ public class FourWayIntersection : IntersectionParent
         yield return null;
     }
     
+	/// Resets the appropriate counters when incrementing generations
     public override void resetGeneration()
     {
         inX1.GetComponent<IncomingCounter>().resetGeneration();

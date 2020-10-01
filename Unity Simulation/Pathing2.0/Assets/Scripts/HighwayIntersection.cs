@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/**
+	@file FourWayIntersection.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;

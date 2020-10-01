@@ -72,7 +72,7 @@ public class FourWayIntersection : IntersectionParent
         reset();
     }
 
-	/// Resets the time back to16 seconds and resets the traffic lights including the counter for the number of moving cars
+	/// Resets the time back to 16 seconds and resets the traffic lights including the counter for the number of moving cars
     void reset()
     {
         timeLeft = timeOut;
@@ -90,7 +90,7 @@ public class FourWayIntersection : IntersectionParent
     }
 
 	/**
-		@return Returns an intersection object
+		@return Returns an intersection object with the stationary and moving car values
 	*/
     public override TrafficIntersection getIntersection()
     {

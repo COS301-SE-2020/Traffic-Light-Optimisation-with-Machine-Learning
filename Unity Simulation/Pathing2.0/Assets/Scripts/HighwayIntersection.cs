@@ -8,6 +8,9 @@ using System;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class contains the logic for the high way intersection
+*/
 public class HighwayIntersection : IntersectionParent
 {
 
@@ -59,11 +62,13 @@ public class HighwayIntersection : IntersectionParent
     [SyncVar]
     bool isMakeChange = false;
 
+	/// Called upon initialization of the intersection
     void Start()
     {
         reset();
     }
 
+	/// Resets the time back to 16 seconds and resets the traffic lights including the counter for the number of moving cars
     void reset()
     { 
         timeLeft = timeOut;
@@ -80,6 +85,9 @@ public class HighwayIntersection : IntersectionParent
         inZ2.GetComponent<IncomingCounter>().reset();
     }
 
+	/**
+		@return Returns an intersection object with the stationary and moving car values
+	*/
     public override TrafficIntersection getIntersection() 
     {
         TrafficIntersection intersection = new TrafficIntersection();
@@ -117,6 +125,7 @@ public class HighwayIntersection : IntersectionParent
         return intersection;
     }
 
+	/// Changes lights to the correct colours
      public void changeLights()
     {
         if(light_configruation)
@@ -148,8 +157,9 @@ public class HighwayIntersection : IntersectionParent
             isXZ = true;
         }
     }
-
-     void Update()
+	
+	/// Called once per frame and makes sure all the lights are showing the correct colours
+    void Update()
     {
         StartCoroutine(Waiter());
         if (isMakeChange)
@@ -158,7 +168,7 @@ public class HighwayIntersection : IntersectionParent
         }
     }
 
-
+	/// Changes traffic lights to the correct intermediate colours (Red and orange)
     IEnumerator Waiter()
     {
         //reset();
@@ -202,16 +212,19 @@ public class HighwayIntersection : IntersectionParent
         yield return null;
     }
 
+	/// Resets time to the 16 seconds
     public override void updateTimeOut(float newTimeOut)
     {
         timeOut = newTimeOut;
     }
 
+	/// Called when new data from the server is received
     public override void makeChange()
     {
         isMakeChange = true;
     }
 
+	/// Called when the server sends data to update this intersection
     IEnumerator APILightChange()
     {
         if (!isXZ)
@@ -260,6 +273,7 @@ public class HighwayIntersection : IntersectionParent
         yield return null;
     }
     
+	/// Resets the appropriate counters when incrementing generations
     public override void resetGeneration()
     {
         inX1.GetComponent<IncomingCounter>().resetGeneration();

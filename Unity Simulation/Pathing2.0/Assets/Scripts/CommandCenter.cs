@@ -12,7 +12,7 @@ public class CommandCenter : MonoBehaviour
     IntersectionParent[] intersections;
     private float timeout = 8f;
     private float timeleft;
-    private readonly static string localSpringServerURL = "http://127.0.0.1:8080/simu/addStatistics2"; //needs to be changed when we have a server setup
+    private readonly static string localSpringServerURL = "http://127.0.0.1:8080/simu/addStatistics"; //needs to be changed when we have a server setup
 
     [SerializeField]
     public JSONNode apiRequestInfo;
@@ -152,13 +152,13 @@ public class CommandCenter : MonoBehaviour
 
                 //Debug.Log("After padding: " + bitStream);
 
-                UnityEngine.Debug.Log("response: " + (string)apiRequest.downloadHandler.text);
+                //UnityEngine.Debug.Log("response: " + (string)apiRequest.downloadHandler.text);
 
                 for (int j = 0; j < intersections.Length; j++)
                 {
                     if (bitStream.ToCharArray().GetValue(j).Equals('1'))
                     {
-                        UnityEngine.Debug.Log("Making change to intersection: " + intersections[j].name);
+                        //UnityEngine.Debug.Log("Making change to intersection: " + intersections[j].name);
                         intersections[j].makeChange();
                     }
                 }

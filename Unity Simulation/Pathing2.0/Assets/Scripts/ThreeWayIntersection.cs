@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿/**
+	@file ThreeWayIntersection.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class holds the logic the Three way intersection
+*/
 public class ThreeWayIntersection : IntersectionParent
 {
     /*Car Counters*/
@@ -49,11 +56,13 @@ public class ThreeWayIntersection : IntersectionParent
     [SyncVar]
     bool isMakeChange = false;
     
+	/// Called upon initialization of the intersection
     void Start()
     {
         reset();
     }
 
+	/// Resets the time back to 16 seconds and resets the traffic lights including the counter for the number of moving cars
     void reset()
     { 
         timeLeft = timeOut;
@@ -68,7 +77,9 @@ public class ThreeWayIntersection : IntersectionParent
         inZ2.GetComponent<IncomingCounter>().reset();
     }
 
-    
+    /**
+		@return Returns an intersection object with the stationary and moving car values
+	*/
     public override TrafficIntersection getIntersection()
     {
         TrafficIntersection intersection = new TrafficIntersection();
@@ -101,6 +112,7 @@ public class ThreeWayIntersection : IntersectionParent
         return intersection;
     }
 
+	/// Changes lights to the correct colours
     public void changeLights()
     {
         if(light_configruation)
@@ -129,7 +141,7 @@ public class ThreeWayIntersection : IntersectionParent
         }
     }
 
-    // Update is called once per frame
+    /// Called once per frame and makes sure all the lights are showing the correct colours
     void Update()
     {
         StartCoroutine(Waiter());
@@ -139,6 +151,7 @@ public class ThreeWayIntersection : IntersectionParent
         }
     }
 
+	/// Changes traffic lights to the correct intermediate colours (Red and orange)
     IEnumerator Waiter()
     {
         //reset();
@@ -178,16 +191,19 @@ public class ThreeWayIntersection : IntersectionParent
         yield return null;
     }
 
+	/// Resets time to the 16 seconds
     public override void updateTimeOut(float newTimeOut)
     {
         timeOut = newTimeOut;
     }
 
+	/// Called when new data from the server is received
     public override void makeChange()
     {
         isMakeChange = true;
     }
 
+	/// Called when the server sends data to update this intersection
     IEnumerator APILightChange()
     {
         if (!isXZ)
@@ -232,6 +248,7 @@ public class ThreeWayIntersection : IntersectionParent
         yield return null;
     }
     
+	/// Resets the appropriate counters when incrementing generations
     public override void resetGeneration()
     {
         inX.GetComponent<IncomingCounter>().resetGeneration();

@@ -1,10 +1,18 @@
-﻿using System.Collections;
+﻿/**
+	@file CustomNetworkManagerHUD.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class contains the custom network manager HUD we implemented, it inherits from the base network manager hud and adds extra functionality
+*/
 public class CustomNetworkManagerHUD : NetworkManagerHUD
 {
+	/// Called when started and sets up the UI
     void OnGUI()
     {
         if (!showGUI)
@@ -39,6 +47,7 @@ public class CustomNetworkManagerHUD : NetworkManagerHUD
         GUILayout.EndArea();
     }
 
+	/// Contains the buttons for connecting to the two different simulations
     void StartButtons()
     {
         if (!NetworkClient.active)
@@ -74,6 +83,7 @@ public class CustomNetworkManagerHUD : NetworkManagerHUD
         }
     }
 
+	/// Method for displaying the status of the connection
     void StatusLabels()
     {
         if (NetworkClient.isConnected)
@@ -82,6 +92,7 @@ public class CustomNetworkManagerHUD : NetworkManagerHUD
         }
     }
 
+	/// Button for leaving the simulation
     void StopButtons()
     {
         if (NetworkClient.isConnected)

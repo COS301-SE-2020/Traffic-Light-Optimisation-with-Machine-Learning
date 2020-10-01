@@ -7,7 +7,7 @@ using UnityEngine;
 using Mirror;
 
 /**
-	This class contains the custom network manager we implemented, it inherits from the base network manager and add extra functionality
+	This class contains the custom network manager we implemented, it inherits from the base network manager and adds extra functionality
 */
 public class CustomNetworkManager : NetworkManager
 {

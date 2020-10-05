@@ -5914,8 +5914,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30.6, y: 126}
-  m_SizeDelta: {x: 238.84991, y: 50}
+  m_AnchoredPosition: {x: 9.2, y: 128.3}
+  m_SizeDelta: {x: 112.25348, y: 22.466492}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &273431970
 MonoBehaviour:
@@ -5965,8 +5965,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5982,7 +5982,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -30219,6 +30219,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1168292271}
   - component: {fileID: 1168292272}
+  - component: {fileID: 1168292274}
+  - component: {fileID: 1168292273}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -30270,6 +30272,43 @@ MonoBehaviour:
   startCameraPosition: {fileID: 911571946}
   endCameraPosition: {fileID: 672060796}
   mainMenuLightingManagerObject: {fileID: 1298262765}
+--- !u!114 &1168292273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168292270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1168292274
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168292270}
+  m_CullTransparentMesh: 0
 --- !u!1001 &1172383119
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31632,7 +31671,7 @@ MonoBehaviour:
   onlineScene: 
   transport: {fileID: 1212082970}
   networkAddress: localhost
-  maxConnections: 40
+  maxConnections: 100
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}

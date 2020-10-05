@@ -7,6 +7,8 @@ public class ControlCamera : MonoBehaviour
     readonly float maxFOV = 90f;
     readonly float sensitivity = 40f;
 
+    float startFOV;
+
     bool allowMovement = false;
 
     bool movecamera = false;
@@ -16,6 +18,11 @@ public class ControlCamera : MonoBehaviour
 
     public Transform startCameraPosition;
     public Transform endCameraPosition;
+
+    void Start()
+    {
+        startFOV = Camera.main.fieldOfView;
+    }
 
     void Update()
     {
@@ -72,12 +79,16 @@ public class ControlCamera : MonoBehaviour
                     transform.position, endCameraPosition.position, Time.deltaTime);
                 transform.rotation = Quaternion.Lerp(
                     transform.rotation, endCameraPosition.rotation, Time.deltaTime);
+
+                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, startFOV, Time.deltaTime);
             }
         } else{
             transform.position = Vector3.Lerp(
                 transform.position, startCameraPosition.position, Time.deltaTime);
             transform.rotation = Quaternion.Lerp(
                 transform.rotation, startCameraPosition.rotation, Time.deltaTime);
+
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, startFOV, Time.deltaTime);
         }
 
         if (movementTimerIsRunning)

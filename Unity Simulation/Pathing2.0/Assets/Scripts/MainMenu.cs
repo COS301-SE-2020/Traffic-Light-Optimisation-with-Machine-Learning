@@ -25,7 +25,7 @@ public class MainMenu : MonoBehaviour
 
     ControlCamera mainCameraControls;
 
-    float connectingTimeRemaining = 4;
+    float connectingTimeRemaining = 2;
     bool connectingTimerIsRunning = false;
 
     public Transform startCameraPosition;
@@ -60,19 +60,19 @@ public class MainMenu : MonoBehaviour
             {
                 connectingText.SetActive(false);
                 connectingTimerIsRunning = false;
-                connectingTimeRemaining = 4;
+                connectingTimeRemaining = 2;
 
                 //ClientScene.AddPlayer(NetworkClient.connection);
-                connectingText.SetActive(false);
+                /*connectingText.SetActive(false);
                 simulationCanvas.SetActive(true);
                 TransitionCamera();
-                mainMenuUI.SetActive(false);
+                mainMenuUI.SetActive(false);*/
             }
         }
 
-        if (NetworkClient.isConnected && !ClientScene.ready)
+        if (NetworkClient.isConnected && ClientScene.ready)
         {
-            ClientScene.Ready(NetworkClient.connection);
+           // ClientScene.Ready(NetworkClient.connection);
 
             if (ClientScene.localPlayer == null)
             {
@@ -89,7 +89,7 @@ public class MainMenu : MonoBehaviour
     public void JoinAI(){
         connectingText.SetActive(true);
         connectingTimerIsRunning = true;
-        networkManager.networkAddress = "142.93.139.199";
+        networkManager.networkAddress = "161.35.167.209";
         tpt.port = 7777;
         networkManager.StartClient();
         mainMenuLightingManagerObject.SetActive(false);
@@ -99,7 +99,7 @@ public class MainMenu : MonoBehaviour
     public void JoinNoAI(){
         connectingText.SetActive(true);
         connectingTimerIsRunning = true;
-        networkManager.networkAddress = "142.93.139.199";
+        networkManager.networkAddress = "161.35.167.209";
         tpt.port = 7778;
         networkManager.StartClient();
         mainMenuLightingManagerObject.SetActive(false);

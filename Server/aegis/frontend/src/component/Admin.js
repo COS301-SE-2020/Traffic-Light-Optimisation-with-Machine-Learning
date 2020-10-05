@@ -19,7 +19,7 @@ class Admin extends React.Component {
 
     componentDidMount() {
         if (getUser() !== null) {
-            axios.get('http://142.93.139.199:8080/api/getUsers')
+            axios.get('http://161.35.167.228:8080/api/getUsers')
                 .then(response => {
                     //console.log(response.data);
                     this.setState({
@@ -40,7 +40,7 @@ class Admin extends React.Component {
         const { users } = this.state;
         var r = window.confirm("Are you sure?");
         if (r === true) {
-            axios.delete('http://142.93.139.199:8080/api/deleteUser/' + id)
+            axios.delete('http://161.35.167.228:8080/api/deleteUser/' + id)
                 .then(result => {
                     //console.log(result.data);
                     this.setState({
@@ -62,11 +62,11 @@ class Admin extends React.Component {
             rid = (rid == 1 ? 2 : 1);
             var admin = { username: getUser().username, password: getUser().password, id: user_id, role_Id: rid }
             //console.log(admin);
-            axios.post('http://142.93.139.199:8080/api/changeRole', admin)
+            axios.post('http://161.35.167.228:8080/api/changeRole', admin)
                 .then(result => {
                     //console.log(result.data);
                     if (getUser() !== null) {
-                        axios.get('http://142.93.139.199:8080/api/getUsers')
+                        axios.get('http://161.35.167.228:8080/api/getUsers')
                             .then(response => {
                                 //console.log(response.data);
                                 this.setState({

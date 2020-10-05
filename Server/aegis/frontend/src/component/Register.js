@@ -31,7 +31,7 @@ function Register(props) {
 
             var data = { username: un, password: pw }
             console.log(data);
-            axios.post('http://142.93.139.199:8080/api/registerEnc', data).then(response => {
+            axios.post('http://161.35.167.228:8080/api/registerEnc', data).then(response => {
                 setLoading(false);
                 props.history.push('/');
             }).catch(error => {

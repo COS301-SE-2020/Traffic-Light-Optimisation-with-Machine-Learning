@@ -9,6 +9,13 @@ public class Transition {
     public long id;
     public double difference;
     
+    /**
+     * Transition() - instantiates an object containing the transition tuple.
+     * @param s_before - state before an action.
+     * @param a - action taken.
+     * @param s_after - state after an action.
+     * @param difference - temporal error difference. 
+     */
     public Transition(double[] s_before,int a, double r, double[] s_after, double difference){
         this.id             = ++id_incrementer;
         this.action         = a;

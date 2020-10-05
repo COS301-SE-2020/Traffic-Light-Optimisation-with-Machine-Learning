@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿/**
+	@file FourWayIntersection.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class contains the logic for the four way intersection
+*/
 public class FourWayIntersection : IntersectionParent
 {
     /*Car Counters*/

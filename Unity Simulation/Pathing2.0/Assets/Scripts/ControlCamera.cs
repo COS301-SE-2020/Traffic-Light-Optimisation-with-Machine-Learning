@@ -1,5 +1,12 @@
-﻿using UnityEngine;
+﻿/**
+	@file ControlCamera.cs
+*/
 
+using UnityEngine;
+
+/**
+	This class contains the logic for controlling the camera
+*/
 public class ControlCamera : MonoBehaviour
 {
     readonly float mainSpeed = 75.0f;
@@ -24,6 +31,7 @@ public class ControlCamera : MonoBehaviour
         startFOV = Camera.main.fieldOfView;
     }
 
+	///Every frame this is called and checks for input, depending on input, the camera will move/rotate/zoom
     void Update()
     {
         if(allowMovement){

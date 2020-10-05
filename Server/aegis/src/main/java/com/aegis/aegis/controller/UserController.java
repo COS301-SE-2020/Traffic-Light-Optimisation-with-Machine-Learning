@@ -32,7 +32,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class UserController {
 
      
-    
+    /**
+    * get() - returns all users.
+    */
     @Autowired
     private UserService userService; 
     @CrossOrigin(origins = "*", allowedHeaders = "*") 
@@ -41,6 +43,10 @@ public class UserController {
         return userService.getUsers();
     }
     
+    /**
+    * changeRole() - changes the role of a user.
+    * @param admin
+    */
     @CrossOrigin(origins = "*", allowedHeaders = "*") 
     @PostMapping("/changeRole")
     public String changeRole(@RequestBody adminDto admin){
@@ -56,11 +62,18 @@ public class UserController {
     }
     */
     
+    /**
+    * getUser() - returns a specific user.
+    */
     @GetMapping("/getUser/{id}")
     public User get(@PathVariable int id) {
         return userService.getUser(id);
     }
     
+    /**
+    * delete() - deletes a specfic user based on their id.
+    * @param id
+    */
     @CrossOrigin(origins = "*", allowedHeaders = "*") 
     @DeleteMapping("/deleteUser/{id}")
     public String delete(@PathVariable int id) {
@@ -78,6 +91,10 @@ public class UserController {
     }
     */
     
+    /**
+    * findByUserName() - finds a user based on their username instead of their id.
+    * @param username
+    */
     @PostMapping("/findByUsername")
     public User FindByUsername(@RequestBody userDto username){
         return userService.findByUsername(username.getUsername());
@@ -88,6 +105,10 @@ public class UserController {
         return userService.checkLogin(login.getUsername(), login.getPassword());
     }
     
+    /**
+    * Register() - registers a user - not used anymore - replaced by RegisterEncrpyted.
+    * @param regUser
+    */
     @CrossOrigin(origins = "*", allowedHeaders = "*") 
     @PostMapping("/register")
     public String Register(@RequestBody loginDto regUser){
@@ -95,6 +116,10 @@ public class UserController {
         return "Success";
     }
     
+    /**
+    * RegisterEncrypted() - registers a user - replaces Register method.
+    * @param regUser
+    */
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/registerEnc")
     public String RegisterEncrypted(@RequestBody loginDto regUser){

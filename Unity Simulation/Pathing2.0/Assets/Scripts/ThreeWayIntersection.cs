@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿/**
+	@file ThreeWayIntersection.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class holds the logic the Three way intersection
+*/
 public class ThreeWayIntersection : IntersectionParent
 {
     /*Car Counters*/
@@ -74,7 +81,8 @@ public class ThreeWayIntersection : IntersectionParent
 
     /**
         getIntersection() - Returns traffic light object with updates data
-    */
+		@return Returns an intersection object with the stationary and moving car values
+	*/
     public override TrafficIntersection getIntersection()
     {
         TrafficIntersection intersection = new TrafficIntersection();
@@ -174,6 +182,13 @@ public class ThreeWayIntersection : IntersectionParent
             }
         }
         yield return null;
+    }
+
+
+	/// Resets time to the 16 seconds
+    public override void updateTimeOut(float newTimeOut)
+    {
+        timeOut = newTimeOut;
     }
 
     /**

@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿/**
+	@file FourWayIntersection.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class contains the logic for the high way intersection
+*/
 public class HighwayIntersection : IntersectionParent
 {
 
@@ -81,7 +88,8 @@ public class HighwayIntersection : IntersectionParent
 
     /**
         getIntersection() - Returns traffic light object with updates data
-    */
+        @return Returns an intersection object with the stationary and moving car values
+	*/
     public override TrafficIntersection getIntersection() 
     {
         TrafficIntersection intersection = new TrafficIntersection();

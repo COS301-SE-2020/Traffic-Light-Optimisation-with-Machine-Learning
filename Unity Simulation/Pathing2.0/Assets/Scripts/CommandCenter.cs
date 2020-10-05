@@ -1,12 +1,18 @@
-﻿using System.Collections;
+﻿/**
+	@file CommandCenter.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
 using System.Text;
 using System;
-using System.Diagnostics;
 
+/**
+	This class contains logic for the command center it handles the communication between the simlation and the AI on the server
+*/
 public class CommandCenter : MonoBehaviour
 {
     IntersectionParent[] intersections;
@@ -23,13 +29,13 @@ public class CommandCenter : MonoBehaviour
     [SerializeField]
     public string json;
 
-    // Start is called before the first frame update
+    /// The Start method is run when the command center is first initialized
     void Start()
     {
         reset();
     }
 
-    // Update is called once per frame
+    /// The Update is called once per frame and every 8 seconds it sends data to the server
     void Update()
     {
         if (intersections == null || intersections.Length == 0)
@@ -44,12 +50,14 @@ public class CommandCenter : MonoBehaviour
         }
     } 
 
+	/// Reset resets the time to be 8 seconds once it runs out
     void reset()
     {
         timeleft = timeout;
         ////Debug.Log("Reseting");
     }
 
+	/// Initializes the intersections array and populates it with all the intersections in the simulation
     void scanIntersections()
     {
         GameObject[] tempArray = GameObject.FindGameObjectsWithTag("Intersection");
@@ -60,6 +68,7 @@ public class CommandCenter : MonoBehaviour
         }
     }
 
+	/// Upload is called every 8 seconds and sends data to the server
     IEnumerator Upload()
     {
         int i = 0;

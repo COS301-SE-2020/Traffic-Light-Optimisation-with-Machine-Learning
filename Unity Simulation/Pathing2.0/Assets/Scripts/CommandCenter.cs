@@ -18,7 +18,7 @@ public class CommandCenter : MonoBehaviour
     IntersectionParent[] intersections;
     private float timeout = 8f;
     private float timeleft;
-    private readonly static string localSpringServerURL = "http://127.0.0.1:8080/simu/addStatistics"; //needs to be changed when we have a server setup
+    private readonly static string localSpringServerURL = "http://161.35.167.228:8080/simu/addStatistics"; //needs to be changed when we have a server setup
 
     [SerializeField]
     public JSONNode apiRequestInfo;

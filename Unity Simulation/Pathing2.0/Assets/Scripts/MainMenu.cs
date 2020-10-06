@@ -70,7 +70,7 @@ public class MainMenu : MonoBehaviour
                 connectingTimeRemaining = 2;
 
                 //ClientScene.AddPlayer(NetworkClient.connection);
-                connectingText.SetActive(false);
+                /*connectingText.SetActive(false);
                 simulationCanvas.SetActive(true);
                 TransitionCamera();
                 mainMenuUI.SetActive(false);
@@ -78,7 +78,7 @@ public class MainMenu : MonoBehaviour
                     aiIndicator.SetActive(true);
                 } else{
                     noAiIndicator.SetActive(true);
-                }
+                }*/
             }
         }
 

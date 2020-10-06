@@ -74,7 +74,7 @@ public class SimulationController {
     * addstatistics() - adds statistics from the simulation AI.
     * @param complete
     */
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @CrossOrigin(origins = {"http://167.71.132.126:7777"}, allowedHeaders = "*")
     @PostMapping("/addStatistics")
     public String addstatistics(@RequestBody completeDto complete){
         try{
@@ -107,7 +107,7 @@ public class SimulationController {
     * addstatistics2() - adds statistics from the simulation AI.
     * @param complete
     */
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @CrossOrigin(origins = {"http://167.71.132.126:7778"}, allowedHeaders = "*")
     @PostMapping("/addStatistics2")
     public void addstatistics2(@RequestBody completeDto complete){
         try{

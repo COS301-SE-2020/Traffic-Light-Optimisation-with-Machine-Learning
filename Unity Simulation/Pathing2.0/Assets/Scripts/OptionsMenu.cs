@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 /**
 	This Options class handles all the logic for the options menu
@@ -18,7 +19,7 @@ public class OptionsMenu : MonoBehaviour
 
 	/// Called upon initialization and sets the correct resolution
     void Start(){
-        resolutions = Screen.resolutions;
+        resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height }).Distinct().ToArray();
 
         resolutionDropdown.ClearOptions();
 
@@ -30,8 +31,8 @@ public class OptionsMenu : MonoBehaviour
             string option = resolutions[i].width + " x " + resolutions[i].height;
             options.Add(option);
 
-            if(resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height){
+            if(resolutions[i].width == Screen.width &&
+                resolutions[i].height == Screen.height){
                 currentResolutionIndex = i;
             }
         }

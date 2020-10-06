@@ -33,6 +33,13 @@ public class MainMenu : MonoBehaviour
 
     public GameObject mainMenuLightingManagerObject;
 
+    public GameObject aiIndicator;
+
+    public GameObject noAiIndicator;
+
+    bool joinedAi;
+
+
 	/// Called upon initialization
     void Start()
     {
@@ -63,10 +70,15 @@ public class MainMenu : MonoBehaviour
                 connectingTimeRemaining = 2;
 
                 //ClientScene.AddPlayer(NetworkClient.connection);
-                /*connectingText.SetActive(false);
+                connectingText.SetActive(false);
                 simulationCanvas.SetActive(true);
                 TransitionCamera();
-                mainMenuUI.SetActive(false);*/
+                mainMenuUI.SetActive(false);
+                if(joinedAi){
+                    aiIndicator.SetActive(true);
+                } else{
+                    noAiIndicator.SetActive(true);
+                }
             }
         }
 
@@ -81,6 +93,11 @@ public class MainMenu : MonoBehaviour
                 simulationCanvas.SetActive(true);
                 TransitionCamera();
                 mainMenuUI.SetActive(false);
+                if(joinedAi){
+                    aiIndicator.SetActive(true);
+                } else{
+                    noAiIndicator.SetActive(true);
+                }
             }
         }
     }
@@ -93,6 +110,7 @@ public class MainMenu : MonoBehaviour
         tpt.port = 7777;
         networkManager.StartClient();
         mainMenuLightingManagerObject.SetActive(false);
+        joinedAi = true;
     }
 
 	/// Logic for connecting to the No-AI simulation
@@ -103,6 +121,7 @@ public class MainMenu : MonoBehaviour
         tpt.port = 7778;
         networkManager.StartClient();
         mainMenuLightingManagerObject.SetActive(false);
+        joinedAi = false;
     }
 
 	/// Closes the application when the quit button is pressed
@@ -114,6 +133,8 @@ public class MainMenu : MonoBehaviour
     public void LeaveSimulation(){
         networkManager.StopClient();
         mainMenuLightingManagerObject.SetActive(true);
+        aiIndicator.SetActive(false);
+        noAiIndicator.SetActive(false);
     }
 
 	/// Transitions the camera to the end point for the simulation

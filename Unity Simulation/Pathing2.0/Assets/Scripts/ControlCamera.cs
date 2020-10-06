@@ -26,6 +26,10 @@ public class ControlCamera : MonoBehaviour
     public Transform startCameraPosition;
     public Transform endCameraPosition;
 
+    public GameObject leaveSimulationCanvas;
+
+    public StartMenuManager startMenuManager;
+
     void Start()
     {
         startFOV = Camera.main.fieldOfView;
@@ -79,6 +83,11 @@ public class ControlCamera : MonoBehaviour
 
             transform.position = newPosition;
             Camera.main.fieldOfView = fov;
+
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                startMenuManager.LeaveSimulation();
+            }
         }
 
         if(movecamera){
@@ -110,6 +119,7 @@ public class ControlCamera : MonoBehaviour
                 allowMovement = true;
                 movementTimerIsRunning = false;
                 movementTimeRemaining = 4;
+                leaveSimulationCanvas.SetActive(true);
             }
         }
     }
@@ -121,5 +131,6 @@ public class ControlCamera : MonoBehaviour
     public void DeTransition(){
         movecamera = false;
         allowMovement = false;
+        leaveSimulationCanvas.SetActive(false);
     }
 }

@@ -27,7 +27,7 @@ function Login(props) {
       var aesPassword = (iv + "::" + salt + "::" + ciphertext);
       pw = btoa(aesPassword);
       var data = { username: un, password: pw }
-      axios.post('http://161.35.167.228:8080/api/login', data).then(response => {
+      axios.post('http://134.122.106.240:8080/api/login', data).then(response => {
         setLoading(false);
         const data = response.data;
         setUserSession(''/*token*/, data);

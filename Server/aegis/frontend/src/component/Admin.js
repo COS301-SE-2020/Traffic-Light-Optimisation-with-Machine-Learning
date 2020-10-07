@@ -29,6 +29,8 @@ class Admin extends React.Component {
                 .catch(error => {
                     console.log(error);
                 });
+        }else{
+            this.props.history.push("/login");
         }
     }
 

@@ -213,6 +213,8 @@ class Statistics extends Component {
         if (getUser() !== null) {
             this.updateState(this);
 
+        }else{
+            this.props.history.push("/login"); 
         }
         /*if (getUser() !== null) {
             this.updateState(); 

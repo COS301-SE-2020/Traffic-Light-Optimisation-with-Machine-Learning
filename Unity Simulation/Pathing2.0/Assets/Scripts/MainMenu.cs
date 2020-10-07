@@ -106,7 +106,7 @@ public class MainMenu : MonoBehaviour
     public void JoinAI(){
         connectingText.SetActive(true);
         connectingTimerIsRunning = true;
-        networkManager.networkAddress = "167.71.132.126";
+        networkManager.networkAddress = "134.122.106.240";
         tpt.port = 7777;
         networkManager.StartClient();
         mainMenuLightingManagerObject.SetActive(false);
@@ -117,7 +117,7 @@ public class MainMenu : MonoBehaviour
     public void JoinNoAI(){
         connectingText.SetActive(true);
         connectingTimerIsRunning = true;
-        networkManager.networkAddress = "167.71.132.126";
+        networkManager.networkAddress = "134.122.106.240";
         tpt.port = 7778;
         networkManager.StartClient();
         mainMenuLightingManagerObject.SetActive(false);

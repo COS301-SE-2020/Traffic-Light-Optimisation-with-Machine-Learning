@@ -80,7 +80,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 726a238751baff94eb4b88655f8c6dc0,
         type: 3}
       propertyPath: m_Name
-      value: street_light_1
+      value: street_light_1 Variant 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 726a238751baff94eb4b88655f8c6dc0, type: 3}

@@ -13,10 +13,10 @@ import BrandImage from '../images/Brand.png';
 
 
 function Dashboard(props) {
-    const user = getUser();
+    /*const user = getUser();
     if (user == null) {
         props.history.push("/login");
-    } else {
+    } else {*/
         //handle click event of logout button
         const handleLogout = () => {
             removeUserSession();
@@ -39,17 +39,17 @@ function Dashboard(props) {
             <div>
                 <div className="navbar-wrapper">
                     <div className="navbar-title">TRAFFIC LIGHT OPTIMISATION WITH MACHINE LEARNING</div>
-                    <div className="navbar-user">Hi, {user.username}</div>
+                    {/* <div className="navbar-user">Hi, {user.username}</div> */}
                     <div className="navbar-link-wrapper">
                         <div className="navbar-link" onClick={handleStatistics}>
                             <ChartIcon />
                             <input type="button" value="VIEW STATISTICS" />
                         </div>
-                        {user.role.id === 1 && <div className="navbar-link" onClick={handleAdmin}><UserIcon /><input type="button" value="MANAGE USERS"></input></div>}
-                        <div className="navbar-link" onClick={handleLogout}>
+                        {/* {user.role.id === 1 && <div className="navbar-link" onClick={handleAdmin}><UserIcon /><input type="button" value="MANAGE USERS"></input></div>} */}
+                        {/* <div className="navbar-link" onClick={handleLogout}>
                             <LogoutIcon />
                             <input type="button" value="LOG OUT" />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="main">
@@ -147,8 +147,8 @@ function Dashboard(props) {
             </div>
 
         );
-    }
-    return (<div></div>);
+    /*}
+    return (<div></div>);*/
 
 }
 

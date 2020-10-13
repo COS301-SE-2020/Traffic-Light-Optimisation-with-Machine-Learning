@@ -21,12 +21,15 @@ function App() {
         <div>
           <div className="content">
             <Switch>
-              <Route exact path="/" component={Login} />
+              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/statistics" component={Statistics} />
+              <Route component={Dashboard} />
+              {/* <Route exact path="/" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/admin" component={Admin} />
               <Route exact path="/statistics" component={Statistics} />
-              <Route component={Login} />
+              <Route component={Login} /> */}
             </Switch>
           </div>
         </div>

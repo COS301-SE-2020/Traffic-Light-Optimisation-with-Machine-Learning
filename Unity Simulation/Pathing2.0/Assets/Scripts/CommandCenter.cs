@@ -1,16 +1,24 @@
-﻿using System.Collections;
+﻿/**
+	@file CommandCenter.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
 using System.Text;
 using System;
+
+/**
+	This class contains logic for the command center it handles the communication between the simlation and the AI on the server
+*/
 public class CommandCenter : MonoBehaviour
 {
     IntersectionParent[] intersections;
     private float timeout = 8f;
     private float timeleft;
-    private readonly static string localSpringServerURL = "http://127.0.0.1:8080/simu/addStatistics2"; //needs to be changed when we have a server setup
+    private readonly static string localSpringServerURL = "http://127.0.0.1:8080/simu/addStatistics"; //needs to be changed when we have a server setup
 
     [SerializeField]
     public JSONNode apiRequestInfo;
@@ -21,13 +29,13 @@ public class CommandCenter : MonoBehaviour
     [SerializeField]
     public string json;
 
-    // Start is called before the first frame update
+    /// The Start method is run when the command center is first initialized
     void Start()
     {
         reset();
     }
 
-    // Update is called once per frame
+    /// The Update is called once per frame and every 8 seconds it sends data to the server
     void Update()
     {
         if (intersections == null || intersections.Length == 0)
@@ -42,12 +50,14 @@ public class CommandCenter : MonoBehaviour
         }
     } 
 
+	/// Reset resets the time to be 8 seconds once it runs out
     void reset()
     {
         timeleft = timeout;
         ////Debug.Log("Reseting");
     }
 
+	/// Initializes the intersections array and populates it with all the intersections in the simulation
     void scanIntersections()
     {
         GameObject[] tempArray = GameObject.FindGameObjectsWithTag("Intersection");
@@ -58,6 +68,7 @@ public class CommandCenter : MonoBehaviour
         }
     }
 
+	/// Upload is called every 8 seconds and sends data to the server
     IEnumerator Upload()
     {
         int i = 0;
@@ -92,7 +103,7 @@ public class CommandCenter : MonoBehaviour
         //obj.name = intersections[i].name;
         json += obj.toJson(i+1);
         json += "],\"numStationaryCars\":"+ GameObject.Find("GlobalData").GetComponent<MetaData>().stopped+"}";
-        //Debug.Log("Sending: " + json);
+        //UnityEngine.Debug.Log("Sending: " + json);
         byte[] bytes = Encoding.UTF8.GetBytes(json);
         UnityWebRequest apiRequest = UnityWebRequest.Put(localSpringServerURL, bytes);//.SetRequestHeader("content-type", "application/json" );
         apiRequest.method = "POST";
@@ -150,13 +161,13 @@ public class CommandCenter : MonoBehaviour
 
                 //Debug.Log("After padding: " + bitStream);
 
-                Debug.Log("response: " + (string)apiRequest.downloadHandler.text);
+                //UnityEngine.Debug.Log("response: " + (string)apiRequest.downloadHandler.text);
 
                 for (int j = 0; j < intersections.Length; j++)
                 {
                     if (bitStream.ToCharArray().GetValue(j).Equals('1'))
                     {
-                        Debug.Log("Making change to intersection: " + intersections[j].name);
+                        //UnityEngine.Debug.Log("Making change to intersection: " + intersections[j].name);
                         intersections[j].makeChange();
                     }
                 }
@@ -169,7 +180,7 @@ public class CommandCenter : MonoBehaviour
 [Serializable]
 public class TrafficIntersection
 {
-    public float stationaryX, stationaryY, movingY, movingX;
+    public float stationaryX, stationaryY, movingY, movingX, period;
     public string name;
     public Int32 phase;
     public TrafficIntersection(){
@@ -177,6 +188,7 @@ public class TrafficIntersection
         this.stationaryY = 0;
         this.movingX = 0;
         this.movingY = 0;
+        this.period = 0;
     }
 
     public string toJson(int id)
@@ -187,6 +199,7 @@ public class TrafficIntersection
                 "\"stationaryY\":" + stationaryY + ","+
                 "\"stationaryX\":" + stationaryX + ","+ 
                 "\"movingY\":" + movingY + ","+
-                "\"movingX\":" + movingX + "}";
+                "\"movingX\":" + movingX + ","+
+                "\"period\":" + period + "}";
     }
 }

@@ -6,6 +6,15 @@ public class statisticDto {
     private float moving_vehicles_X;
     private float moving_vehicles_Y;
     private int phase;
+    private float period;
+    
+    public float getPeriod(){
+        return this.period;
+    }
+    
+    public void setPeriod(float period){
+        this.period = period;
+    }
     
     public int getPhase(){
         return this.phase;

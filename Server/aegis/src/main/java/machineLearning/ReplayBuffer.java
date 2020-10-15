@@ -2,17 +2,23 @@
 package machineLearning; 
 public class ReplayBuffer {
     private long oldest = 0;
-    private final static int maxSize = 128;
+    private final static int maxSize = 500;
     public int occupancy;
     private final Transition head;
     private final Transition[] buffer;
-    
+    /**
+    * replayBuffer() - instantiates the replay buffer.
+    */
     public ReplayBuffer() {
         occupancy   = 0;
         head        = null;
         buffer      = new Transition[maxSize];
     } 
     
+    /**
+    * getTransition() - gets a transition tuple.
+    * @return buffer
+    */
     public Transition getTransition(int index){
         /*if(occupancy == 0 || index < 0){
            index = 0;
@@ -22,6 +28,9 @@ public class ReplayBuffer {
         return this.buffer[index];
     }
     
+    /**
+    * reset - resets the replays buffer's matrix values to 0.
+    */
     public void reset(){
         occupancy = 0;
         for (int i = 0; i < maxSize; i++) {
@@ -29,6 +38,10 @@ public class ReplayBuffer {
         }
     }
     
+    /**
+    * enqueue() - adds a transition tuple to the buffer.
+    * @param Transition
+    */
     public void enqueue(Transition t) {
         if (occupancy == 0) {
             oldest = t.id; 
@@ -50,6 +63,9 @@ public class ReplayBuffer {
         }
     }
 
+    /**
+    * dequeue() - removes a transition tuple from the buffer.
+    */
     public void dequeue() {
         if (occupancy > 0) {
             int position = 0;

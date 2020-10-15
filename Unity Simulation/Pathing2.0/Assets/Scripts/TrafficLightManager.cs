@@ -1,8 +1,15 @@
-﻿using System.Collections;
+﻿/**
+	@file TrafficLightManager.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class holds the logic for the traffic light colour changer
+*/
 public class TrafficLightManager : NetworkBehaviour
 {
     [SyncVar]
@@ -19,6 +26,7 @@ public class TrafficLightManager : NetworkBehaviour
         greenLight.SetActive(false);
     }*/
 
+	/// Called every frame and sets correct colour of lights
     private void Update()
     {
         if (currentColour == "Red")
@@ -41,6 +49,10 @@ public class TrafficLightManager : NetworkBehaviour
         }
     }
 
+	/**
+		<Setter that sets colour of light to the one passed in>
+		@param Light colour is passed in
+	*/
     public void changeLight(string colour)
     {
         currentColour = colour;

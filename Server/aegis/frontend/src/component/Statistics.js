@@ -27,7 +27,7 @@ class Statistics extends Component {
             var int_objects = [];
             var ai_int_objects = [];
             var normal_int_objects = [];
-            axios.get('http://142.93.139.199:8080/simu/getIntersections2')
+            axios.get('http://134.122.106.240:8080/simu/getIntersections2')
                 .then(response => {
                     var int_data        = response.data;
                     var ai_int_data     = int_data.ai;
@@ -210,10 +210,13 @@ class Statistics extends Component {
 
 
     componentDidMount() {
-        if (getUser() !== null) {
+        this.updateState(this);
+        /*if (getUser() !== null) {
             this.updateState(this);
 
-        }
+        }else{
+            this.props.history.push("/login"); 
+        }*/
         /*if (getUser() !== null) {
             this.updateState(); 
         }*/

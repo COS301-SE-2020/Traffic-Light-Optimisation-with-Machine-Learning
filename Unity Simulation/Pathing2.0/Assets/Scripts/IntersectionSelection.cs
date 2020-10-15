@@ -1,7 +1,14 @@
-﻿using UnityEngine;
+﻿/**
+	@file IntersectionSelection.cs
+*/
+
+using UnityEngine;
 using System.Collections;
 using TMPro;
 
+/**
+	This class is to implement the feature of hovering statistics
+*/
 public class IntersectionSelection : MonoBehaviour
 {
     public TextMeshProUGUI UI_intersection;

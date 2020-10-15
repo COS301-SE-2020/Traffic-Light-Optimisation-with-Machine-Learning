@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿/**
+	@file LightingManager.cs
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using Mirror;
 
+/**
+	This class is to implement day-night cycle
+*/
 [ExecuteAlways]
 public class LightingManager : NetworkBehaviour
 {
@@ -23,11 +30,13 @@ public class LightingManager : NetworkBehaviour
 
     private spawning spawningScript;
 
+	/// Called upon initialization of object
     private void Start()
     {
         spawningScript = carSpawner.GetComponent<spawning>();
     }
 
+	/// Called once per frame, updates the time and the spawning rate accordingiy
     private void Update()
     {
         if (Preset == null)
@@ -87,7 +96,7 @@ public class LightingManager : NetworkBehaviour
         }
     }
 
-
+	/// Updates the actual lighting in the scene
     private void UpdateLighting(float timePercent)
     {
         //Set ambient and fog

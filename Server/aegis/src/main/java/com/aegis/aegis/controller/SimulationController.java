@@ -26,35 +26,55 @@ public class SimulationController {
     @Autowired
     private IntersectionService intersectionService;
     
+     /**
+    * getIntersections() - returns data from the intersection (X direction).
+    */
     @CrossOrigin(origins = "*", allowedHeaders = "*") 
     @GetMapping("/getIntersections")
     public List<intersectionDto> getIntersections(){
         return intersectionService.getIntersections();
     } 
     
-    
+    /**
+    * getIntersections2() - returns data from the intersection (Z direction).
+    */
     @CrossOrigin(origins = "*", allowedHeaders = "*") 
     @GetMapping("/getIntersections2")
     public intersectionsDto getIntersections2(){
         return intersectionService.getIntersections2();
     } 
     
-    
+    /**
+    * addStatistic() - adds statistics from the intersection data.
+    * @param statistic
+    */
     @PostMapping("/addStatistic")
     public List<intersectionDto> addStatistic(@RequestBody statisticDto statistic){
         intersectionService.addStatistic(statistic);
         return this.getIntersections();
     }
     
+    /**
+    * addStat() - adds statistics from the intersection data.
+    * @param statistic
+    */
     public void addStat(statisticDto statistic){
         intersectionService.addStatistic(statistic);
     }
     
+    /**
+    * addStat2() - adds statistics from the intersection data.
+    * @param statistic
+    */
     public void addStat2(statisticDto statistic){
         intersectionService.addStatistic2(statistic);
     }
     
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    /**
+    * addstatistics() - adds statistics from the simulation AI.
+    * @param complete
+    */
+    @CrossOrigin(origins = {"*"}, allowedHeaders = "*")
     @PostMapping("/addStatistics")
     public String addstatistics(@RequestBody completeDto complete){
         try{
@@ -69,6 +89,8 @@ public class SimulationController {
                 state[(i*NeuralNetworkUtitlities.numNumbersData)+2] = stats[i].getMovingX();
                 state[(i*NeuralNetworkUtitlities.numNumbersData)+3] = stats[i].getMovingY();
                 state[(i*NeuralNetworkUtitlities.numNumbersData)+4] = stats[i].getPhase();
+                state[(i*NeuralNetworkUtitlities.numNumbersData)+5] = stats[i].getPeriod();
+                
             } 
             int action = rl.getAction(state,complete.getNumStationaryCars());
             if(action == -1){
@@ -81,7 +103,11 @@ public class SimulationController {
         
     }
     
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    /**
+    * addstatistics2() - adds statistics from the simulation AI.
+    * @param complete
+    */
+    @CrossOrigin(origins = {"*"}, allowedHeaders = "*")
     @PostMapping("/addStatistics2")
     public void addstatistics2(@RequestBody completeDto complete){
         try{
@@ -97,13 +123,13 @@ public class SimulationController {
     }
     
     @PostMapping("/resetModel")
-    public void resetModel(){
+    private void resetModel(){
         NeuralNetworkUtitlities.deleteModel();
         rl = new ReinforcementLearning(new int[]{300,300,300,300});
     }
     
     @PostMapping("/print")
-    public void print(){
+    private void print(){
         rl.prediction.Print();
     }
     

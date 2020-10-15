@@ -10,7 +10,8 @@ import java.util.Scanner;
 
 public class NeuralNetworkUtitlities {
 
-    public static int numNumbersData    = 5;
+    //public static int numNumbersData    = 5;
+    public static int numNumbersData    = 6;
     public static int numIntersections  = 6;
     public static int numInput;
     public static int numOutput;
